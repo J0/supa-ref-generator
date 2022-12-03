@@ -1,0 +1,194 @@
+pages:
+  on_auth_state_change:
+  - $ref: '@supabase/gotrue-js.GoTrueClient.onAuthStateChange'
+    description: null
+    examples:
+    - isSpotlight: true
+      js: "```js\nsupabase.auth.onAuthStateChange((event, session) => {\n  console.log(event,\
+        \ session)\n})\n```\n"
+      name: Listen to auth changes
+    - js: "```js\nsupabase.auth.onAuthStateChange((event, session) => {\n  if (event\
+        \ == 'SIGNED_IN') console.log('SIGNED_IN', session)\n})\n```\n"
+      name: Listen to sign in
+    - js: "```js\nsupabase.auth.onAuthStateChange((event, session) => {\n  if (event\
+        \ == 'SIGNED_OUT') console.log('SIGNED_OUT', session)\n})\n```\n"
+      name: Listen to sign out
+    - js: "```js\nsupabase.auth.onAuthStateChange((event, session) => {\n  if (event\
+        \ == 'TOKEN_REFRESHED') console.log('TOKEN_REFRESHED', session)\n})\n```\n"
+      name: Listen to token refresh
+    - js: "```js\nsupabase.auth.onAuthStateChange((event, session) => {\n  if (event\
+        \ == 'USER_UPDATED') console.log('USER_UPDATED', session)\n})\n```\n"
+      name: Listen to user updates
+    - js: "```js\nsupabase.auth.onAuthStateChange((event, session) => {\n  if (event\
+        \ == 'USER_DELETED') console.log('USER_DELETED', session)\n})\n```\n"
+      name: Listen to user deleted
+    - js: "```js\nsupabase.auth.onAuthStateChange((event, session) => {\n  if (event\
+        \ == 'PASSWORD_RECOVERY') console.log('PASSWORD_RECOVERY', session)\n})\n\
+        ```\n"
+      name: Listen to password recovery events
+    title: auth.onAuthStateChange()
+    title_without_prefix: onAuthStateChange
+  refresh_session:
+  - $ref: '@supabase/gotrue-js.GoTrueClient.refreshSession'
+    description: null
+    examples:
+    - isSpotlight: true
+      js: '```js
+
+        const { data: { user, session }, error } = await supabase.auth.refreshSession()
+
+        ```
+
+        '
+      name: Refresh session using the current session
+    - isSpotlight: true
+      js: '```js
+
+        const { data: { user, session }, error } = await supabase.auth.refreshSession({
+        refresh_token })
+
+        ```
+
+        '
+      name: Refresh session using a passed-in session
+    title: auth.refreshSession()
+    title_without_prefix: refreshSession
+  set_session:
+  - $ref: '@supabase/gotrue-js.GoTrueClient.setSession'
+    description: null
+    examples:
+    - description: Sets the session data from a `refresh_token` and `access_token`
+        and returns the current session or an error if the tokens are invalid.
+      isSpotlight: true
+      js: "```js\n  const { data, error } = supabase.auth.setSession({refresh_token,\
+        \ access_token})\n```\n"
+      name: Set the session
+    title: auth.setSession()
+    title_without_prefix: setSession
+  sign_out:
+  - $ref: '@supabase/gotrue-js.GoTrueClient.signOut'
+    description: null
+    examples:
+    - isSpotlight: true
+      js: '```js
+
+        const { error } = await supabase.auth.signOut()
+
+        ```
+
+        '
+      name: Sign out
+    title: auth.signOut()
+    title_without_prefix: signOut
+  sign_up:
+  - $ref: '@supabase/gotrue-js.GoTrueClient.signUp'
+    description: null
+    examples:
+    - isSpotlight: true
+      js: "```js\nconst { data, error } = await supabase.auth.signUp({\n  email: 'example@email.com',\n\
+        \  password: 'example-password',\n})\n```\n"
+      name: Sign up.
+    - isSpotlight: false
+      js: "```js\nconst { data, error } = await supabase.auth.signUp(\n  {\n    email:\
+        \ 'example@email.com',\n    password: 'example-password',\n    options: {\n\
+        \      data: {\n        first_name: 'John',\n        age: 27,\n      }\n \
+        \   }\n  }\n)\n```\n"
+      name: Sign up with additional user metadata.
+    title: auth.signUp()
+    title_without_prefix: signUp
+  update:
+  - $ref: '@supabase/postgrest-js.PostgrestQueryBuilder.update'
+    description: null
+    examples:
+    - description: "<Tabs scrollable size=\"small\" type=\"underlined\" defaultActiveId=\"\
+        schema\">\n<TabPanel id=\"schema\" label=\"Schema\">\n  ```sql\n  create table\n\
+        \    countries (id int8 primary key, name text);\n  insert into\n    countries\
+        \ (id, name)\n  values\n    (1, 'Taiwan');\n  ```\n</TabPanel>\n<TabPanel\
+        \ id=\"js\" label=\"JavaScript\">\n  ```ts\n  const { error } = await supabase\n\
+        \    .from('countries')\n    .update({ name: 'Australia' })\n    .eq('id',\
+        \ 1)\n  ```\n</TabPanel>\n<TabPanel id=\"result\" label=\"Result\">\n  ```json\n\
+        \  {\n    \"status\": 204,\n    \"statusText\": \"No Content\"\n  }\n  ```\n\
+        </TabPanel>\n</Tabs>\n<Tabs scrollable size=\"small\" type=\"underlined\"\
+        \ defaultActiveId=\"js\">\n<TabPanel id=\"js\" label=\"JavaScript\">\n  ```ts\n\
+        \  const { data, error } = await supabase\n    .from('countries')\n    .select()\n\
+        \  ```\n</TabPanel>\n<TabPanel id=\"result\" label=\"Result\">\n  ```json\n\
+        \  {\n    \"data\": [\n      {\n        \"id\": 1,\n        \"name\": \"Australia\"\
+        \n      }\n    ],\n    \"status\": 200,\n    \"statusText\": \"OK\"\n  }\n\
+        \  ```\n</TabPanel>\n</Tabs>\n"
+      hideCodeBlock: true
+      isSpotlight: true
+      js: "```ts\nconst { error } = await supabase\n  .from('countries')\n  .update({\
+        \ name: 'Australia' })\n  .eq('id', 1)\n```\n"
+      name: Updating your data
+    - description: "<Tabs scrollable size=\"small\" type=\"underlined\" defaultActiveId=\"\
+        schema\">\n<TabPanel id=\"schema\" label=\"Schema\">\n  ```sql\n  create table\n\
+        \    countries (id int8 primary key, name text);\n  insert into\n    countries\
+        \ (id, name)\n  values\n    (1, 'Taiwan');\n  ```\n</TabPanel>\n<TabPanel\
+        \ id=\"js\" label=\"JavaScript\">\n  ```ts\n  const { data, error } = await\
+        \ supabase\n    .from('countries')\n    .update({ name: 'Australia' })\n \
+        \   .eq('id', 1)\n    .select()\n  ```\n</TabPanel>\n<TabPanel id=\"result\"\
+        \ label=\"Result\">\n  ```json\n  {\n    \"data\": [\n      {\n        \"\
+        id\": 1,\n        \"name\": \"Australia\"\n      }\n    ],\n    \"status\"\
+        : 200,\n    \"statusText\": \"OK\"\n  }\n  ```\n</TabPanel>\n</Tabs>\n"
+      hideCodeBlock: true
+      name: Update a record and return it
+    - description: "Postgres offers some\n[operators](/docs/guides/database/json#query-the-jsonb-data)\
+        \ for\nworking with JSON data.\n<Tabs scrollable size=\"small\" type=\"underlined\"\
+        \ defaultActiveId=\"schema\">\n<TabPanel id=\"schema\" label=\"Schema\">\n\
+        \  ```sql\n  create table\n    users (\n      id int8 primary key,\n     \
+        \ name text,\n      address jsonb\n    );\n  insert into\n    users (id, name,\
+        \ address)\n  values\n    (1, 'Michael', '{ \"postcode\": 90210 }');\n  ```\n\
+        </TabPanel>\n<TabPanel id=\"js\" label=\"JavaScript\">\n  ```ts\n  const {\
+        \ data, error } = await supabase\n    .from('users')\n    .update({\n    \
+        \  address: {\n        street: 'Melrose Place',\n        postcode: 90210\n\
+        \      }\n    })\n    .eq('address->postcode', 90210)\n    .select()\n  ```\n\
+        </TabPanel>\n<TabPanel id=\"result\" label=\"Result\">\n  ```json\n  {\n \
+        \   \"data\": [\n      {\n        \"id\": 1,\n        \"name\": \"Michael\"\
+        ,\n        \"address\": {\n          \"street\": \"Melrose Place\",\n    \
+        \      \"postcode\": 90210\n        }\n      }\n    ],\n    \"status\": 200,\n\
+        \    \"statusText\": \"OK\"\n  }\n  ```\n</TabPanel>\n</Tabs>\nCurrently,\
+        \ it is only possible to update the entire JSON document.\n"
+      hideCodeBlock: true
+      name: Updating JSON data
+    title: update()
+    title_without_prefix: update
+  - $ref: '@supabase/storage-js.packages/StorageFileApi.default.update'
+    description: null
+    examples:
+    - isSpotlight: true
+      js: "```js\nconst avatarFile = event.target.files[0]\nconst { data, error }\
+        \ = await supabase\n  .storage\n  .from('avatars')\n  .update('public/avatar1.png',\
+        \ avatarFile, {\n    cacheControl: '3600',\n    upsert: false\n  })\n```\n"
+      name: Update file
+    - js: "```js\nimport {decode} from 'base64-arraybuffer'\nconst { data, error }\
+        \ = await supabase\n  .storage\n  .from('avatars')\n  .update('public/avatar1.png',\
+        \ decode('base64FileData'), {\n    contentType: 'image/png'\n  })\n```\n"
+      name: Update file using `ArrayBuffer` from base64 file data
+    title: storage.from.update()
+    title_without_prefix: update
+  verify_otp:
+  - $ref: '@supabase/gotrue-js.GoTrueClient.verifyOtp'
+    description: null
+    examples:
+    - isSpotlight: true
+      js: '```js
+
+        const { data, error } = await supabase.auth.verifyOtp({ phone, token, type:
+        ''sms''})
+
+        ```
+
+        '
+      name: Verify Sms One-Time Password (OTP)
+    - isSpotlight: false
+      js: '```js
+
+        const { data, error } = await supabase.auth.verifyOtp({ email, token, type:
+        ''signup''})
+
+        ```
+
+        '
+      name: Verify Signup One-Time Password (OTP)
+    title: auth.verifyOtp()
+    title_without_prefix: verifyOtp
